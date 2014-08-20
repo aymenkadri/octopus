@@ -1,37 +1,29 @@
 package com.ensi.octopus.domain;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
-import com.ensi.octopus.domain.util.CustomLocalDateSerializer;
+import java.io.Serializable;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Patient.
  */
-@Entity
-@Table(name = "T_PATIENT")
-public class Patient implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private long id;
-
-    @Size(min = 1, max = 50)
-    private String sampleTextAttribute;
+@Document(collection = "T_PATIENT")
+public class Patient extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    private LocalDate sampleDateAttribute;
+    @Size(min = 0, max = 50)
+    @Id
+    private long id;
+
+    @JsonIgnore
+    @Size(min = 0, max = 100)
+    private String sampleTextAttribute;
 
     public long getId() {
         return id;
@@ -49,14 +41,6 @@ public class Patient implements Serializable {
         this.sampleTextAttribute = sampleTextAttribute;
     }
 
-    public LocalDate getSampleDateAttribute() {
-        return sampleDateAttribute;
-    }
-
-    public void setSampleDateAttribute(LocalDate sampleDateAttribute) {
-        this.sampleDateAttribute = sampleDateAttribute;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -68,11 +52,8 @@ public class Patient implements Serializable {
 
         Patient patient = (Patient) o;
 
-        if (id != patient.id) {
-            return false;
-        }
+        return id == patient.id;
 
-        return true;
     }
 
     @Override
@@ -85,7 +66,6 @@ public class Patient implements Serializable {
         return "Patient{" +
                 "id=" + id +
                 ", sampleTextAttribute='" + sampleTextAttribute + '\'' +
-                ", sampleDateAttribute=" + sampleDateAttribute +
                 '}';
     }
 }

@@ -73,7 +73,6 @@ public class PatientResourceTest {
 
         patient = new Patient();
         patient.setId(DEFAULT_ID);
-    	patient.setSampleDateAttribute(DEFAULT_SAMPLE_DATE_ATTR);
     	patient.setSampleTextAttribute(DEFAULT_SAMPLE_TEXT_ATTR);
     }
 
@@ -95,7 +94,6 @@ public class PatientResourceTest {
     			.andExpect(jsonPath("$.sampleTextAttribute").value(DEFAULT_SAMPLE_TEXT_ATTR));
 
     	// Update Patient
-    	patient.setSampleDateAttribute(UPD_SAMPLE_DATE_ATTR);
     	patient.setSampleTextAttribute(UPD_SAMPLE_TEXT_ATTR);
   
     	restPatientMockMvc.perform(post("/app/rest/patients")
