@@ -23,7 +23,9 @@ How to deploy
 
 
 CI with jenkins
-https://aymen.ci.cloudbees.com/job/octopus/
+[![Build Status](https://aymen.ci.cloudbees.com/job/octopus/)](https://aymen.ci.cloudbees.com/job/octopus/)
+
+
 
 Methodologie agile : Trello
 
