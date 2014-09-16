@@ -9,4 +9,8 @@ import com.ensi.octopus.domain.Patient;
  */
 public interface PatientRepository extends MongoRepository<Patient, Long> {
 
+    Patient findByCin(Long cin);
+
+    Long deleteByCin(Long cin);
+
 }

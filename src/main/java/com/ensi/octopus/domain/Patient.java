@@ -8,64 +8,73 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * A Patient.
  */
-@Document(collection = "T_PATIENT")
+@Document(collection = "patients")
 public class Patient extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Size(min = 0, max = 50)
-    @Id
-    private long id;
+    private Long cin;
 
-    @JsonIgnore
     @Size(min = 0, max = 100)
-    private String sampleTextAttribute;
+    private String name;
 
-    public long getId() {
-        return id;
+    @Size(min = 0, max = 100)
+    private Integer age;
+
+    public Long getCin() {
+        return cin;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCin(Long cin) {
+        this.cin = cin;
     }
 
-    public String getSampleTextAttribute() {
-        return sampleTextAttribute;
+    public String getName() {
+        return name;
     }
 
-    public void setSampleTextAttribute(String sampleTextAttribute) {
-        this.sampleTextAttribute = sampleTextAttribute;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Patient)) return false;
 
         Patient patient = (Patient) o;
 
-        return id == patient.id;
+        return !(age != null ? !age.equals(patient.age) : patient.age != null) &&
+                cin.equals(patient.cin) &&
+                !(name != null ? !name.equals(patient.name) : patient.name != null);
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = cin.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Patient{" +
-                "id=" + id +
-                ", sampleTextAttribute='" + sampleTextAttribute + '\'' +
+                "cin=" + cin +
+                ", name='" + name + '\'' +
+                ", age=" + age +
                 '}';
     }
 }

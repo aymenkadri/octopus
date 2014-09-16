@@ -56,7 +56,7 @@ public class PatientResource {
     @Timed
     public Patient get(@PathVariable Long id, HttpServletResponse response) {
         log.debug("REST request to get Patient : {}", id);
-        Patient patient = patientRepository.findOne(id);
+        Patient patient = patientRepository.findByCin(id);
         if (patient == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -72,6 +72,6 @@ public class PatientResource {
     @Timed
     public void delete(@PathVariable Long id, HttpServletResponse response) {
         log.debug("REST request to delete Patient : {}", id);
-        patientRepository.delete(id);
+        patientRepository.deleteByCin(id);
     }
 }

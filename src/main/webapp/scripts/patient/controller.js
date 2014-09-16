@@ -15,18 +15,18 @@ octopusApp.controller('PatientController', ['$scope', 'resolvedPatient', 'Patien
         };
 
         $scope.update = function (id) {
-            $scope.patient = Patient.get({id: id});
+            $scope.patient = Patient.get({cin: id});
             $('#savePatientModal').modal('show');
         };
 
         $scope.delete = function (id) {
-            Patient.delete({id: id},
+            Patient.delete({cin: id},
                 function () {
                     $scope.patients = Patient.query();
                 });
         };
 
         $scope.clear = function () {
-            $scope.patient = {id: "", sampleTextAttribute: "", sampleDateAttribute: ""};
+            $scope.patient = {cin: "", name: "", age: ""};
         };
     }]);

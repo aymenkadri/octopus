@@ -20,21 +20,21 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" name="id"
-                                   ng-model="patient.id" readonly>
+                            <label>CIN</label>
+                            <input type="number" class="form-control" name="cin"
+                                   ng-model="patient.cin">
                         </div>
 
                         <div class="form-group">
-                            <label>Sample text attribute</label>
-                            <input type="text" class="form-control" name="test"
-                                   ng-model="patient.sampleTextAttribute" ng-minlength=1 ng-maxlength=50 required>
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name"
+                                   ng-model="patient.name" ng-minlength=1 ng-maxlength=50 required>
                         </div>
 
                         <div class="form-group">
-                            <label>Sample date attribute</label>
-                            <input type="date" class="form-control" name="test"
-                                   ng-model="patient.sampleDateAttribute" required>
+                            <label>Age</label>
+                            <input type="number" class="form-control" name="age"
+                                   ng-model="patient.age" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -54,25 +54,25 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Sample text</th>
-                    <th>Sample date</th>
+                    <th>CIN</th>
+                    <th>Name</th>
+                    <th>Age</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="patient in patients">
-                    <td>{{patient.id}}</td>
-                    <td>{{patient.sampleTextAttribute}}</td>
-                    <td>{{patient.sampleDateAttribute}}</td>
+                    <td>{{patient.cin}}</td>
+                    <td>{{patient.name}}</td>
+                    <td>{{patient.age}}</td>
                     <td>
                         <button type="submit"
-                                ng-click="update(patient.id)"
+                                ng-click="update(patient.cin)"
                                 class="btn">
                             <span class="glyphicon glyphicon-pencil"></span> Edit
                         </button>
                         <button type="submit"
-                                ng-click="delete(patient.id)"
+                                ng-click="delete(patient.cin)"
                                 class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove-circle"></span> Delete
                         </button>

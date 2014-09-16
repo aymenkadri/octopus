@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import javax.inject.Inject;
 
-import org.joda.time.LocalDate;
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,15 +46,15 @@ import com.ensi.octopus.repository.PatientRepository;
 @ActiveProfiles("dev")
 public class PatientResourceTest {
 	
-    private static final Long DEFAULT_ID = new Long(1L);
+    private static final Long DEFAULT_ID = 1l;
 
-    private static final LocalDate DEFAULT_SAMPLE_DATE_ATTR = new LocalDate(0L);
+    private static final String DEFAULT_NAME = "Toto";
 
-    private static final LocalDate UPD_SAMPLE_DATE_ATTR = new LocalDate();
+    private static final String UPD_NAME = "Tata";
 
-    private static final String DEFAULT_SAMPLE_TEXT_ATTR = "sampleTextAttribute";
+    private static final Integer DEFAULT_AGE = 25;
 
-    private static final String UPD_SAMPLE_TEXT_ATTR = "sampleTextAttributeUpt";
+    private static final Integer UPD_AGE = 52;
 
     @Inject
     private PatientRepository patientRepository;
@@ -72,8 +72,8 @@ public class PatientResourceTest {
         this.restPatientMockMvc = MockMvcBuilders.standaloneSetup(patientResource).build();
 
         patient = new Patient();
-        patient.setId(DEFAULT_ID);
-    	patient.setSampleTextAttribute(DEFAULT_SAMPLE_TEXT_ATTR);
+        patient.setCin(DEFAULT_ID);
+    	patient.setName(DEFAULT_NAME);
     }
 
     @Test
@@ -89,12 +89,12 @@ public class PatientResourceTest {
     	restPatientMockMvc.perform(get("/app/rest/patients/{id}", DEFAULT_ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(DEFAULT_ID.intValue()))
-    			.andExpect(jsonPath("$.sampleDateAttribute").value(DEFAULT_SAMPLE_DATE_ATTR.toString()))
-    			.andExpect(jsonPath("$.sampleTextAttribute").value(DEFAULT_SAMPLE_TEXT_ATTR));
+                .andExpect(jsonPath("$.cin").value(DEFAULT_ID))
+    			.andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+    			.andExpect(jsonPath("$.age").value(DEFAULT_AGE));
 
     	// Update Patient
-    	patient.setSampleTextAttribute(UPD_SAMPLE_TEXT_ATTR);
+    	patient.setName(UPD_NAME);
   
     	restPatientMockMvc.perform(post("/app/rest/patients")
     			.contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -105,9 +105,9 @@ public class PatientResourceTest {
     	restPatientMockMvc.perform(get("/app/rest/patients/{id}", DEFAULT_ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(DEFAULT_ID.intValue()))
-    			.andExpect(jsonPath("$.sampleDateAttribute").value(UPD_SAMPLE_DATE_ATTR.toString()))
-    			.andExpect(jsonPath("$.sampleTextAttribute").value(UPD_SAMPLE_TEXT_ATTR));
+                .andExpect(jsonPath("$.cin").value(DEFAULT_ID))
+    			.andExpect(jsonPath("$.name").value(UPD_NAME))
+    			.andExpect(jsonPath("$.age").value(UPD_AGE));
 
     	// Delete Patient
     	restPatientMockMvc.perform(delete("/app/rest/patients/{id}", DEFAULT_ID)
